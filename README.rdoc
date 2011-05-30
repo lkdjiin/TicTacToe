@@ -1,0 +1,21 @@
+= TicTacToe
+
+This program demonstrates how to use the GameBoard2D library for java.
+
+== Features
+
+== Documentation
+
+== Dependencies
+
+=== Developper's dependencies
+
+== Install
+
+== License
+GPL, see COPYING.
+
+== Questions and/or Comments
+
+Feel free to email {Xavier Nayrac}[mailto:xavier.nayrac@gmail.com]
+with any questions.
