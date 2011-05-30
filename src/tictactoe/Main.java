@@ -2,10 +2,10 @@ package tictactoe;
 
 import gameboard2d.GameBoard2D;
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 
 /*
- * This class demonstrates how to use the GameBoard2D library version 0.1.
+ * This class demonstrates how to use the GameBoard2D library version 0.2.
  *
  * This is not a finished game. This code doesn't teach you how to
  * implement a tic tac toe game. The following code only teach you
@@ -32,7 +32,9 @@ public class Main extends javax.swing.JFrame {
             // nothing more than a box of the board.
             // The final argument is the dimension of the board.
             // The two images (board and cache) must be of the same size.
-            gb2d = new GameBoard2D("images/ttt-board.png", "images/ttt-board-cache.png", new Dimension(300, 300));
+            gb2d = new GameBoard2D(new File("images/ttt-board.png"),
+                    new File("images/ttt-board-cache.png"),
+                    new Dimension(300, 300));
 
             // Set up all the boxes of the board.
             // For every box you give :
@@ -40,31 +42,32 @@ public class Main extends javax.swing.JFrame {
             //   - the color of the cached area for this box
             //   - the reference point of the box from which the library
             //     will draw a piece (this point will be the top left corner
-            //     of the piece).
-            //   - the dimension of the box (this thing will be removed in a future revision).
-            gb2d.addCell(0, new Color(0,0,0), new Point(0,0), new Dimension(100,100));
-            gb2d.addCell(1, new Color(20,20,20), new Point(100,0), new Dimension(100,100));
-            gb2d.addCell(2, new Color(40,40,40), new Point(200,0), new Dimension(100,100));
-            gb2d.addCell(3, new Color(60,60,60), new Point(0,100), new Dimension(100,100));
-            gb2d.addCell(4, new Color(80,80,80), new Point(100,100), new Dimension(100,100));
-            gb2d.addCell(5, new Color(100,100,100), new Point(200,100), new Dimension(100,100));
-            gb2d.addCell(6, new Color(120,120,120), new Point(0,200), new Dimension(100,100));
-            gb2d.addCell(7, new Color(140,140,140), new Point(100,200), new Dimension(100,100));
-            gb2d.addCell(8, new Color(160,160,160), new Point(200,200), new Dimension(100,100));
+            //     of the drawed piece).
+            //   - the dimension of the box (expected this to be removed in the next revision).
+            gb2d.addBox(0, new Color(0,0,0), new Point(0,0), new Dimension(100,100));
+            gb2d.addBox(1, new Color(20,20,20), new Point(100,0), new Dimension(100,100));
+            gb2d.addBox(2, new Color(40,40,40), new Point(200,0), new Dimension(100,100));
+            gb2d.addBox(3, new Color(60,60,60), new Point(0,100), new Dimension(100,100));
+            gb2d.addBox(4, new Color(80,80,80), new Point(100,100), new Dimension(100,100));
+            gb2d.addBox(5, new Color(100,100,100), new Point(200,100), new Dimension(100,100));
+            gb2d.addBox(6, new Color(120,120,120), new Point(0,200), new Dimension(100,100));
+            gb2d.addBox(7, new Color(140,140,140), new Point(100,200), new Dimension(100,100));
+            gb2d.addBox(8, new Color(160,160,160), new Point(200,200), new Dimension(100,100));
 
             // Add the pieces of the game.
             // For every piece you give:
             //   - an ID, that is the name of the piece
             //   - the image of the piece
-            gb2d.addPiece("cross", "images/cross.png");
-            gb2d.addPiece("circle", "images/circle.png");
+            gb2d.addPiece("cross", new File("images/cross.png"));
+            gb2d.addPiece("circle", new File("images/circle.png"));
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             System.exit(1);
         }
 
-        // To finish the initialization, you add the GameBoard2D in a panel.
+        // To finish the initialization, you add the GameBoard2D object in a panel
+        // of your GUI.
         // This panel should be of the same size than the board image.
         panel.add(gb2d);
 
@@ -142,21 +145,21 @@ public class Main extends javax.swing.JFrame {
         label.setText("Cross turn");
 
         // That method simply draw the board on the screen.
-        gb2d.displayBoard();
+        gb2d.drawBoard();
     }//GEN-LAST:event_newGameActionPerformed
 
     private void panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseClicked
         // I have added a mouse listener to the panel which contain
         // the GameBoard2D object.
-        // When thios panel is clicked, ask the library for the box ID.
-        int cell = gb2d.getCellNumber(evt.getPoint());
+        // When this panel is clicked, we ask the library for the box ID.
+        int cell = gb2d.getBoxId(evt.getPoint());
 
         // To draw a piece, tell the library the name of the piece and
         // the box id.
         if(turn == CROSS) {
-            gb2d.putPiece("cross", cell);
+            gb2d.drawPiece("cross", cell);
         } else {
-            gb2d.putPiece("circle", cell);
+            gb2d.drawPiece("circle", cell);
         }
 
         nextTurn();
